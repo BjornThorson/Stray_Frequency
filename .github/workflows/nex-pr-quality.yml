@@ -1,0 +1,14 @@
+name: Nex PR quality checks
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    uses: BjornThorson/Project-automation/.github/workflows/nex-reusable-quality.yml@main
+    with:
+      profile: npm-build
