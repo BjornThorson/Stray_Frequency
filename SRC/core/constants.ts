@@ -1,6 +1,6 @@
 import type { EquipmentSlot, InventoryItem } from './types';
 
-export const INVENTORY_SLOT_COUNT = 36;
+export const INVENTORY_SLOT_COUNT = 28;
 export const MOBILE_INVENTORY_PAGE_SIZE = 12;
 export const MOBILE_INVENTORY_PAGE_COUNT = 3;
 
