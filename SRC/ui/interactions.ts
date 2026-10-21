@@ -1,4 +1,4 @@
-import { ACTIVITY_TICK_MS, MOBILE_INVENTORY_PAGE_COUNT, SALVAGE_MAX_TICKS, SALVAGE_RESET_MS } from '../core/constants';
+import { ACTIVITY_TICK_MS, SALVAGE_MAX_TICKS, SALVAGE_RESET_MS } from '../core/constants';
 import { appendLog, characterName, gameState } from '../core/state';
 import type { ActionType, EquipmentSlot, FishingMethod, Panel, SkillKey } from '../core/types';
 import { ITEM_DEFINITIONS } from '../data/items';
@@ -61,12 +61,6 @@ function renderPanelAndBind(): void {
   target.querySelectorAll<HTMLButtonElement>('[data-equipment-slot]').forEach((button) => {
     const slot = button.dataset.equipmentSlot as EquipmentSlot | undefined;
     if (slot && gameState.equipment[slot]) bindItemInteraction(target, button, () => { void unequipItem(slot); }, moveItem);
-  });
-  target.querySelectorAll<HTMLButtonElement>('[data-inventory-page]').forEach((button) => {
-    button.addEventListener('click', () => {
-      gameState.mobileInventoryPage = (gameState.mobileInventoryPage + Number(button.dataset.inventoryPage) + MOBILE_INVENTORY_PAGE_COUNT) % MOBILE_INVENTORY_PAGE_COUNT;
-      renderPanelAndBind();
-    });
   });
 }
 

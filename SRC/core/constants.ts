@@ -1,8 +1,6 @@
 import type { EquipmentSlot, InventoryItem } from './types';
 
 export const INVENTORY_SLOT_COUNT = 28;
-export const MOBILE_INVENTORY_PAGE_SIZE = 12;
-export const MOBILE_INVENTORY_PAGE_COUNT = 3;
 
 export const MAX_SKILL_LEVEL = 100;
 export const LOG_LIMIT = 36;

@@ -4,7 +4,7 @@
 #app input,#app textarea{-webkit-user-select:text;user-select:text}
 .compact-hud{display:none}
 
-@media (orientation:landscape) and (max-height:700px) and (any-pointer:coarse){
+@media (orientation:landscape){
   html,body{width:100%;height:100%;margin:0!important;padding:0!important;overflow:hidden!important;background:#000!important}
   #app{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
 
@@ -83,4 +83,36 @@
   #app[data-compact-bar="bottom"] .global-bar{top:auto!important;bottom:0!important}
   .layout-edit-controls button:not([data-layout-action="bar"]):not([data-layout-action="reset"]){display:none!important}
   .global-bar>button,.global-bar>.layout-edit-controls,.global-bar>.developer-menu-wrap{position:relative!important}
+}
+
+
+/* Final geometry overrides: imported after responsive and desktop shell rules.
+   Same elements and handlers on both screen types; only dimensions differ. */
+@media (orientation:landscape){
+  .location-card{display:block!important}
+  .compact-hud{--hud-panel-width:236px;--hud-menu-width:46px;--hud-height:min(360px,calc(100dvh - 94px));--hud-slot:clamp(20px,calc((100dvh - 164px)/7),38px);--hud-gap:3px}
+  .compact-hud-tabs{width:calc(var(--hud-panel-width) + var(--hud-menu-width))!important;height:var(--hud-height)!important;pointer-events:none!important}
+  .compact-hud-tabs>.tab-stack{width:100%!important;height:100%!important;grid-template-columns:var(--hud-panel-width) var(--hud-menu-width)!important;grid-template-rows:minmax(0,1fr)!important;pointer-events:none!important}
+  .compact-hud-tabs .rune-menu-top{width:var(--hud-menu-width)!important;height:max-content!important;grid-template-columns:var(--hud-menu-width)!important;grid-template-rows:repeat(8,36px)!important;pointer-events:auto!important}
+  .compact-hud-tabs .rune-menu-top button{width:var(--hud-menu-width)!important;height:36px!important;min-width:0!important;min-height:0!important}
+  .compact-hud-tabs .active-panel{box-sizing:border-box!important;width:var(--hud-panel-width)!important;height:100%!important;min-height:0!important;max-height:none!important;padding:6px!important;overflow-x:hidden!important;overflow-y:auto!important;pointer-events:auto!important}
+  .compact-hud-tabs .active-panel .panel-kicker{font-size:10px!important;line-height:1.2!important}
+  .compact-hud-tabs .active-panel:has(.inventory-tiles) h3{font-size:14px!important;line-height:1.1!important;margin:3px 0 5px!important}
+  .compact-hud-tabs .inventory-tiles{display:grid!important;grid-template-columns:repeat(4,var(--hud-slot))!important;grid-template-rows:repeat(7,var(--hud-slot))!important;grid-auto-rows:var(--hud-slot)!important;width:max-content!important;height:auto!important;gap:var(--hud-gap)!important;align-content:start!important}
+  .compact-hud-tabs .inventory-tile{box-sizing:border-box!important;width:var(--hud-slot)!important;height:var(--hud-slot)!important;min-width:0!important;min-height:0!important;padding:2px!important;touch-action:none!important}
+  .compact-hud-tabs .inventory-tile img{max-width:100%!important;max-height:100%!important}
+  .compact-hud-chat{width:min(48vw,500px,calc(100vw - var(--hud-panel-width) - var(--hud-menu-width) - 36px))!important}
+  .mobile-inventory-pages{display:none!important}
+  .layout-editing .compact-hud-tabs{pointer-events:auto!important}
+}
+@media (orientation:landscape) and (min-width:951px) and (min-height:701px){
+  .compact-hud{--hud-panel-width:310px;--hud-menu-width:52px;--hud-height:min(445px,calc(100dvh - 120px));--hud-slot:44px;--hud-gap:4px}
+  .compact-hud-status{width:228px!important;height:48px!important}
+  .compact-hud-status .quick-stats strong{font-size:12px!important}
+  .compact-hud-status .quick-stats small{font-size:7px!important}
+  .compact-hud-tabs .rune-menu-top{grid-template-rows:repeat(8,40px)!important}
+  .compact-hud-tabs .rune-menu-top button{height:40px!important}
+  .compact-hud-tabs .menu-icon{font-size:19px!important}
+  .compact-hud-chat{height:175px!important}
+  .compact-hud-chat .log-line{font-size:11px!important}
 }

@@ -5,8 +5,8 @@
 
 .inventory-tiles {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(7, minmax(0, 1fr));
   gap: 5px;
   height: 252px;
 }
@@ -84,16 +84,14 @@
   visibility: visible;
 }
 
-.inventory-tile:nth-child(6n + 1)[data-tooltip]::after,
-.inventory-tile:nth-child(6n + 2)[data-tooltip]::after,
-.inventory-tile:nth-child(6n + 3)[data-tooltip]::after {
+.inventory-tile:nth-child(4n + 1)[data-tooltip]::after,
+.inventory-tile:nth-child(4n + 2)[data-tooltip]::after {
   left: 0;
   transform: none;
 }
 
-.inventory-tile:nth-child(6n + 4)[data-tooltip]::after,
-.inventory-tile:nth-child(6n + 5)[data-tooltip]::after,
-.inventory-tile:nth-child(6n + 6)[data-tooltip]::after {
+.inventory-tile:nth-child(4n + 3)[data-tooltip]::after,
+.inventory-tile:nth-child(4n + 4)[data-tooltip]::after {
   left: auto;
   right: 0;
   transform: none;
