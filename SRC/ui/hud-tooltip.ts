@@ -69,6 +69,8 @@ export function bindHudTooltips(): void {
     return target instanceof Element ? target.closest<HTMLElement>(selector) : null;
   }
 
+  // Starting a drag should dismiss any lingering hover description.
+  mount.addEventListener('pointerdown', hide, { signal });
   mount.addEventListener('pointerover', event => {
     if (event.pointerType !== 'touch') show(find(event.target));
   }, { signal });

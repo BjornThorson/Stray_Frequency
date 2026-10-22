@@ -195,3 +195,33 @@
   pointer-events:none;box-shadow:0 8px 20px rgba(0,0,0,.5)
 }
 .hud-hover-tooltip[hidden] {display:none!important}
+
+/* Readability and mouse-drag feedback in the shared landscape HUD. */
+@media (orientation:landscape) {
+  .compact-hud-tabs .inventory-tile[data-inventory-index] {cursor:grab!important}
+  .compact-hud-tabs .inventory-tile.item-dragging {
+    cursor:grabbing!important;opacity:.55!important;
+    outline:2px solid var(--amber)!important;outline-offset:-2px!important
+  }
+}
+/* Modest desktop scaling. Short/mobile landscape and all portrait modes retain their layouts. */
+@media (orientation:landscape) and (min-width:951px) and (min-height:701px) {
+  .compact-hud {
+    --hud-panel-width:390px;--hud-menu-width:74px;
+    --hud-height:min(570px,calc(100dvh - 100px));--hud-gap:6px
+  }
+  .compact-hud-tabs .menu-icon {font-size:27px!important}
+  .compact-hud-tabs .active-panel .panel-kicker {font-size:12px!important}
+  .compact-hud-tabs .active-panel:has(.inventory-tiles) h3 {font-size:16px!important}
+  .compact-hud-tabs .inventory-heading span {font-size:11px!important}
+  .compact-hud-tabs .skill-icon {width:42px!important;height:42px!important;font-size:22px!important}
+  .compact-hud-tabs .skill-tile strong {font-size:18px!important}
+  .compact-hud-status {width:262px!important;height:56px!important}
+  .compact-hud-status .quick-stats strong {font-size:14px!important}
+  .compact-hud-status .quick-stats small {font-size:8px!important}
+  .compact-hud-status .stat-icon {font-size:15px!important}
+  .compact-hud-chat {height:205px!important}
+  .compact-hud-chat .log-line {font-size:12px!important}
+  .compact-hud-chat .chat-tabs button {font-size:10px!important}
+  .compact-hud-chat .chat-input input {font-size:12px!important}
+}
