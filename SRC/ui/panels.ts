@@ -79,7 +79,7 @@ function skillsPanelMarkup(): string {
     const skill = gameState.skills.find((entry) => entry.skill_key === key);
     const level = skill?.level ?? 1; const xp = skill?.xp ?? 0; const next = xpForNextSkillLevel(level);
     const tip = level >= MAX_SKILL_LEVEL ? `${name} — Level ${level}/${MAX_SKILL_LEVEL} — MAX LEVEL` : `${name} — Level ${level}/${MAX_SKILL_LEVEL} — XP ${xp} / ${next} to next level`;
-    return `<button type="button" class="skill-tile" data-skill="${escapeHtml(key)}" data-tooltip="${escapeHtml(tip)}" aria-haspopup="dialog" aria-controls="skill-details-dialog"><span class="skill-icon">${escapeHtml(icon)}</span><span class="skill-name">${escapeHtml(name)}</span><strong>${level}<small>/${MAX_SKILL_LEVEL}</small></strong></button>`;
+    return `<button type="button" class="skill-tile" data-skill="${escapeHtml(key)}" data-tooltip="${escapeHtml(tip)}" aria-haspopup="dialog" aria-label="${escapeHtml(`${name}, level ${level} of ${MAX_SKILL_LEVEL}`)}" aria-controls="skill-details-dialog"><span class="skill-icon">${escapeHtml(icon)}</span><span class="skill-name">${escapeHtml(name)}</span><strong>${level}<small>/${MAX_SKILL_LEVEL}</small></strong></button>`;
   }).join('')}</div>`;
 }
 

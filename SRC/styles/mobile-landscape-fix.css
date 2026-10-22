@@ -116,3 +116,82 @@
   .compact-hud-chat{height:175px!important}
   .compact-hud-chat .log-line{font-size:11px!important}
 }
+
+
+/* SHARED LANDSCAPE HUD POLISH
+   Uses the existing single HUD, retaining mobile portrait independently. */
+@media (orientation:landscape) {
+  .compact-hud-tabs .rune-menu-top {
+    height:100%!important;
+    grid-template-rows:repeat(8,minmax(0,1fr))!important
+  }
+  .compact-hud-tabs .rune-menu-top button {
+    height:100%!important;min-height:0!important
+  }
+
+  .compact-hud-tabs .active-panel:has(.inventory-tiles),
+  .compact-hud-tabs .active-panel:has(.skill-tiles) {
+    display:flex!important;flex-direction:column!important;
+    overflow:hidden!important
+  }
+  .compact-hud-tabs .active-panel:has(.inventory-tiles)>.panel-kicker,
+  .compact-hud-tabs .active-panel:has(.skill-tiles)>.panel-kicker,
+  .compact-hud-tabs .inventory-heading,
+  .compact-hud-tabs .active-panel:has(.skill-tiles)>h3 {
+    flex:0 0 auto!important
+  }
+  .compact-hud-tabs .inventory-tiles {
+    flex:1 1 0!important;box-sizing:border-box!important;
+    width:100%!important;height:100%!important;min-height:0!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    grid-template-rows:repeat(7,minmax(0,1fr))!important;
+    gap:var(--hud-gap)!important
+  }
+  .compact-hud-tabs .inventory-tile {
+    box-sizing:border-box!important;
+    width:100%!important;height:100%!important;
+    min-width:0!important;min-height:0!important
+  }
+
+  .compact-hud-tabs .skill-tiles {
+    flex:1 1 0!important;box-sizing:border-box!important;
+    width:100%!important;height:100%!important;min-height:0!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-template-rows:repeat(4,minmax(0,1fr))!important;gap:6px!important
+  }
+  .compact-hud-tabs .skill-tile {
+    grid-template-columns:minmax(0,1fr) auto!important;gap:5px!important;padding:5px!important
+  }
+  .compact-hud-tabs .skill-tile .skill-icon {justify-self:start!important}
+  .compact-hud-tabs .skill-tile strong {justify-self:end!important}
+  /* Visually hide the names, preserving their text for accessibility. */
+  .compact-hud-tabs .skill-name {
+    position:absolute!important;width:1px!important;height:1px!important;
+    padding:0!important;margin:-1px!important;overflow:hidden!important;
+    clip-path:inset(50%)!important;white-space:nowrap!important
+  }
+
+  .compact-hud-tabs .inventory-tile[data-tooltip]::after,
+  .compact-hud-tabs .equipment-slot[data-tooltip]::after,
+  .compact-hud-tabs .skill-tile[data-tooltip]::after {
+    content:none!important;display:none!important
+  }
+  /* Keep the existing click-active-tab-to-close behaviour. */
+  .compact-hud-tabs .active-panel[hidden] {display:none!important}
+}
+@media (orientation:landscape) and (min-width:951px) and (min-height:701px) {
+  .compact-hud {
+    --hud-panel-width:340px;--hud-menu-width:64px;
+    --hud-height:min(500px,calc(100dvh - 120px));--hud-gap:5px
+  }
+  .compact-hud-tabs .menu-icon {font-size:24px!important}
+}
+.hud-hover-tooltip {
+  position:fixed;z-index:1000;box-sizing:border-box;
+  width:min(260px,calc(100vw - 16px));max-width:calc(100vw - 16px);
+  padding:8px 10px;border:1px solid #625a4d;background:#080a0c;
+  color:#e1dfdb;font-size:11px;line-height:1.4;
+  white-space:normal;overflow-wrap:anywhere;text-align:left;
+  pointer-events:none;box-shadow:0 8px 20px rgba(0,0,0,.5)
+}
+.hud-hover-tooltip[hidden] {display:none!important}
