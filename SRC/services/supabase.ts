@@ -146,3 +146,18 @@ export async function subscribeToRoomChat(roomId: string, onChange: () => void):
     )
     .subscribe();
 }
+
+/**
+ * NPC social data is exposed only through authenticated, server-authoritative
+ * RPCs. These methods intentionally do not expose direct table access.
+ */
+export function fetchSocialSnapshotRpc() {
+  return supabase.rpc('social_snapshot');
+}
+
+export function recordSocialVisitRpc(npcId: string, requestId: string) {
+  return supabase.rpc('social_record_visit', {
+    p_npc_id: npcId,
+    p_request_id: requestId
+  });
+}

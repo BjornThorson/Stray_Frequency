@@ -6,6 +6,8 @@ export function bindHudTooltips(): void {
   const mount = document.querySelector<HTMLElement>('.compact-hud-tabs');
   const app = document.querySelector<HTMLElement>('#app');
   if (!mount || !app) return;
+  // Stable non-null reference for callbacks registered below.
+  const appRoot = app;
 
   const tooltip = document.createElement('div');
   tooltip.id = 'hud-hover-tooltip';
@@ -28,7 +30,7 @@ export function bindHudTooltips(): void {
 
   function position(): void {
     if (!active || !active.isConnected || !landscape.matches ||
-        app.classList.contains('layout-editing') || active.closest('[hidden]')) {
+        appRoot.classList.contains('layout-editing') || active.closest('[hidden]')) {
       hide();
       return;
     }
@@ -49,7 +51,7 @@ export function bindHudTooltips(): void {
   }
 
   function show(element: HTMLElement | null): void {
-    if (!element || !landscape.matches || app.classList.contains('layout-editing')) {
+    if (!element || !landscape.matches || appRoot.classList.contains('layout-editing')) {
       hide();
       return;
     }
@@ -89,7 +91,7 @@ export function bindHudTooltips(): void {
   window.addEventListener('resize', position, { signal });
   landscape.addEventListener('change', position, { signal });
   app.addEventListener('pointerdown', () => {
-    if (app.classList.contains('layout-editing')) hide();
+    if (appRoot.classList.contains('layout-editing')) hide();
   }, { signal });
 
   cleanupHudTooltips = () => {
