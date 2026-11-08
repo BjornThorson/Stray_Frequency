@@ -370,21 +370,31 @@ visit/recognition interaction. It does not expose the simulated relationship
 AI, landmark memories, gossip or offscreen NPC behaviours. Those remain
 standalone, tested prototypes.
 
-The intended GitHub Pages production workflow will run the social automated
-tests and build with `VITE_SOCIAL_ENCOUNTERS_ENABLED=true` only after that
-workflow change has been separately authorised. The **testing branch retains
-its existing workflow** and does not deploy the live site. By default the
-client-side feature flag remains off. The build-time flag and the separate
-server-side `social_npc_catalog.enabled` gate are independent.
+### Production flag release (Stage C.3)
 
-Release status: the production Supabase migration has been applied,
-privileges and RLS verified, and Marrow's NPC catalogue entry enabled.
-The attempted direct push to the protected `main` branch was rejected
-by GitHub (PR required; workflow permission absent). The social-system
-code is being integrated onto the existing `testing` branch without
-changing its GitHub Actions workflow and without publishing the live
-site. A future reviewed PR and authorised production workflow update
-are required to enable the actual frontend feature on GitHub Pages.
+The limited Marrow greeting is switched on by the tracked public-only
+`.env.production` file, which Vite loads automatically during the existing
+GitHub Pages `npm run build` step. This avoids requiring changes to the
+GitHub Actions workflow or additional OAuth scopes. Local development builds
+remain disabled unless explicitly opted in. An explicitly provided
+`VITE_SOCIAL_ENCOUNTERS_ENABLED=false` build environment variable can
+override the production file if a rollback build is needed.
+
+`tests/social-production-config.test.mjs` verifies Vite loads the production
+opt-in and does not enable it in default development. The second gate is
+server-side: `social_npc_catalog.enabled` must also be true. The production
+Supabase migration and security permissions have been verified and Marrow's
+catalogue row has been enabled.
+
+Stage C.3 exposes only the greeting and persistent routine familiarity,
+not gossip, independent NPC AI, or new social actions. The released frontend
+is accessible through the existing Glassmarket vendor dialog after login.
+The production rollout must be reviewed, merged via PR into protected `main`,
+deployed by GitHub Pages, and then inspected on the real site.
+
+Anonymous-access denial and simulated authenticated database tests are
+verified. A live signed-in end-to-end test has *not* been completed until
+a real player account's greet/reload persistence is inspected.
 
 Security caveat: these SQL RPCs use `SECURITY DEFINER` with fixed schema
 qualification, narrow execution grants, authenticated ownership checks,
