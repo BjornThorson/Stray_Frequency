@@ -335,6 +335,9 @@
 
 .vendor-dialog {
   width: min(520px, calc(100vw - 32px));
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 0;
   border: 1px solid var(--line);
   border-radius: 7px;
@@ -418,4 +421,78 @@
   height: 32px;
   font-size: 20px;
   cursor: pointer;
+}
+
+/* Experimental NPC contact panel, enabled only with a matching server. */
+.social-encounter{
+  margin: 0 18px 18px;
+  padding: 14px;
+  display: grid;
+  gap: 9px;
+  border: 1px solid var(--line);
+  background: #12171a;
+}
+.social-encounter__heading{
+  display:flex;
+  align-items:start;
+  justify-content:space-between;
+  gap:12px;
+}
+.social-encounter__heading h3{
+  font-size:17px;
+  margin:4px 0 0;
+  line-height:1.2;
+  color:var(--text);
+}
+.social-encounter__type{
+  color:var(--amber);
+  white-space:nowrap;
+  font-size:9px;
+  letter-spacing:.09em;
+  margin-top:4px;
+}
+.social-encounter__status{
+  color:var(--muted);
+  margin:2px 0 4px;
+  font-size:13px;
+}
+.social-encounter__footer{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.social-encounter__footer button{
+  border:1px solid var(--line);
+  background:#272124;
+  color:var(--text);
+  padding:9px 16px;
+  cursor:pointer;
+  font-weight:600;
+}
+.social-encounter__footer button:disabled{
+  cursor:not-allowed;
+  opacity:.5;
+}
+.social-encounter__footer button:focus-visible{
+  outline:2px solid var(--pink);
+  outline-offset:2px;
+}
+.social-encounter__footer .social-encounter__retry{
+  background:transparent;
+}
+.social-encounter__message{
+  padding:10px 11px;
+  margin:0;
+  color:var(--text);
+  font-size:12px;
+  background:rgba(255,255,255,.05);
+}
+.social-encounter__footnote{
+  color:var(--muted);
+  line-height:1.4;
+  font-size:11px;
+}
+@media (max-width:480px){
+  .social-encounter__heading{flex-wrap:wrap}
+  .social-encounter__type{white-space:normal}
 }

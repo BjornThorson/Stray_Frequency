@@ -11,6 +11,12 @@ import { renderLog } from './log';
 import { bindItemInteraction } from './mobile-input';
 import { openSkillDetails, renderPanel } from './panels';
 import { renderScene } from './scene';
+import {
+  SOCIAL_ENCOUNTERS_ENABLED,
+  beginVendorSocialEncounter,
+  greetVendorSocialEncounter,
+  retryVendorSocialEncounter
+} from './social-encounter';
 import { renderShell, updateShell } from './shell';
 
 function addLog(message: string): void { appendLog(gameState, message); renderLog(); }
@@ -182,8 +188,10 @@ function openVendorDialog(): void {
       <div class="vendor-card"><strong>Powered Salvage Bar</strong><span>100 credits</span><button type="button" data-vendor-action="buy-powered-salvage-bar" ${summary.canBuy ? '' : 'disabled'}>Buy</button></div>
       <div class="vendor-card"><strong>Tier 1 Metal Scrap</strong><span>5 credits each</span><button type="button" data-vendor-action="sell-metal-scrap" ${summary.scrap > 0 ? '' : 'disabled'}>Sell 1</button></div>
     </div>
-    <div class="vendor-footer"><small>Available credits: ${summary.credits}</small><small>Scrap on hand: ${summary.scrap}</small></div>`;
+    <div class="vendor-footer"><small>Available credits: ${summary.credits}</small><small>Scrap on hand: ${summary.scrap}</small></div>
+    ${SOCIAL_ENCOUNTERS_ENABLED ? '<div id="vendor-social-section"></div>' : ''}`;
   if (!dialog.open) dialog.showModal();
+  if (SOCIAL_ENCOUNTERS_ENABLED) beginVendorSocialEncounter();
 }
 
 async function handleAction(action: ActionType): Promise<void> {
@@ -243,6 +251,14 @@ function bindStaticInteractions(): void {
   });
   document.querySelector<HTMLDialogElement>('#vendor-dialog')?.addEventListener('click', (event) => {
     if ((event.target as HTMLElement).closest('[data-close-vendor]')) (event.currentTarget as HTMLDialogElement).close();
+    if ((event.target as HTMLElement).closest('[data-social-visit]')) {
+      void greetVendorSocialEncounter();
+      return;
+    }
+    if ((event.target as HTMLElement).closest('[data-social-refresh]')) {
+      retryVendorSocialEncounter();
+      return;
+    }
     const vendorAction = (event.target as HTMLElement).closest<HTMLElement>('[data-vendor-action]');
     if (vendorAction?.dataset.vendorAction) void handleAction(vendorAction.dataset.vendorAction as ActionType);
   });

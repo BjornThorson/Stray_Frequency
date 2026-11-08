@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Stray Frequency | Marrow encounter UI inspection</title>
+</head>
+<body>
+  <main class="social-inspection-stage">
+    <div class="social-inspection-scene">
+      <div class="panel-kicker">SOUTH DOCK // GLASSMARKET</div>
+      <h1>Stray Frequency</h1>
+      <p>Visual inspection of the experimental merchant encounter.</p>
+    </div>
+  </main>
+  <dialog class="vendor-dialog" id="vendor-dialog" aria-labelledby="vendor-dialog-title">
+    <header class="vendor-header">
+      <div><div class="panel-kicker">GLASSMARKET MERCHANT</div><h2 id="vendor-dialog-title">Marrow Kest</h2></div>
+      <button class="skill-details-close" type="button" data-close-vendor aria-label="Close vendor dialog">×</button>
+    </header>
+    <p class="vendor-summary">Paid salvage work, cut-rate tools, and a few side jobs for travellers.</p>
+    <div class="vendor-grid">
+      <div class="vendor-card"><strong>Powered Salvage Bar</strong><span>100 credits</span><button type="button">Buy</button></div>
+      <div class="vendor-card"><strong>Tier 1 Metal Scrap</strong><span>5 credits each</span><button type="button">Sell 1</button></div>
+    </div>
+    <div class="vendor-footer"><small>Available credits: 250</small><small>Scrap on hand: 4</small></div>
+    <div id="vendor-social-section"></div>
+  </dialog>
+  <script type="module">
+    import '../../SRC/styles/index.css';
+    import { socialEncounterMarkup } from '../../SRC/ui/social-encounter-markup.ts';
+    const count = Number(new URLSearchParams(location.search).get('visits') ?? 4);
+    const status = new URLSearchParams(location.search).get('status') ?? 'ready';
+    document.querySelector('#vendor-social-section').innerHTML = socialEncounterMarkup({
+      status,
+      snapshot: {version:1,relationships:[],routines:[{
+        observer_key:'npc:marrow_kest',subject_key:'player:demo',
+        encounters:count,last_encounter_at:'2026-11-07T20:00:00Z'
+      }]},
+      message: status==='ready' ? 'Marrow glances up from the ledger and gives you a brief nod.' : null
+    },'demo');
+    const dialog = document.querySelector('#vendor-dialog');
+    dialog.showModal();
+    if (new URLSearchParams(location.search).get('scroll') === 'bottom') {
+      requestAnimationFrame(() => { dialog.scrollTop = dialog.scrollHeight; });
+    }
+  </script>
+  <style>
+    .social-inspection-stage{min-height:100vh;background:radial-gradient(ellipse at 20% 20%,#16212c,#07090b 70%);display:flex;justify-content:center;align-items:center}
+    .social-inspection-scene{max-width:560px;padding:32px;color:#dedcd8}
+    .social-inspection-scene h1{font-family:Impact,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;font-weight:400}
+    .social-inspection-scene p{color:#98999b}
+  </style>
+</body>
+</html>
