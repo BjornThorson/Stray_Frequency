@@ -1,6 +1,5 @@
 import {
   EQUIPMENT_SLOTS, FISHING_XP_PER_TICK, INVENTORY_SLOT_COUNT, MAX_SKILL_LEVEL,
-  MOBILE_INVENTORY_PAGE_COUNT, MOBILE_INVENTORY_PAGE_SIZE
 } from '../core/constants';
 import { gameState } from '../core/state';
 import type { EquipmentSlot, FishingMethod, InventoryEntry, RoomAction, SkillKey } from '../core/types';
@@ -68,10 +67,7 @@ function worldPanelMarkup(): string {
 }
 
 function inventoryPanelMarkup(): string {
-  const mobileInventory = window.matchMedia('(max-width: 820px)').matches;
-  const start = mobileInventory ? gameState.mobileInventoryPage * MOBILE_INVENTORY_PAGE_SIZE : 0;
-  const end = mobileInventory ? start + MOBILE_INVENTORY_PAGE_SIZE : gameState.inventorySlots.length;
-  return `<div class="panel-kicker">INVENTORY</div><div class="inventory-heading"><h3>${INVENTORY_SLOT_COUNT} Slots</h3><span>${gameState.inventorySlots.filter(Boolean).length}/${INVENTORY_SLOT_COUNT} USED</span></div><div class="inventory-tiles">${gameState.inventorySlots.slice(start, end).map((entry, offset) => inventorySlotMarkup(entry, start + offset)).join('')}</div><div class="mobile-inventory-pages"><button type="button" data-inventory-page="-1">‹</button><span>PAGE ${gameState.mobileInventoryPage + 1} / ${MOBILE_INVENTORY_PAGE_COUNT}</span><button type="button" data-inventory-page="1">›</button></div><div class="touch-item-detail" id="touch-item-detail">Tap = use/equip · Hold = inspect · Drag = move</div><p class="inventory-hint">Desktop: hover for details, double-click to equip or deploy.</p>`;
+  return `<div class="panel-kicker">INVENTORY</div><div class="inventory-heading"><h3>${INVENTORY_SLOT_COUNT} Slots</h3><span>${gameState.inventorySlots.filter(Boolean).length}/${INVENTORY_SLOT_COUNT} USED</span></div><div class="inventory-tiles">${gameState.inventorySlots.slice(0, INVENTORY_SLOT_COUNT).map((entry, index) => inventorySlotMarkup(entry, index)).join('')}</div><div class="touch-item-detail" id="touch-item-detail">Tap = use/equip · Hold = inspect · Drag = move</div><p class="inventory-hint">Desktop: hover for details, double-click to equip or deploy.</p>`;
 }
 
 function equipmentPanelMarkup(): string {
@@ -83,7 +79,7 @@ function skillsPanelMarkup(): string {
     const skill = gameState.skills.find((entry) => entry.skill_key === key);
     const level = skill?.level ?? 1; const xp = skill?.xp ?? 0; const next = xpForNextSkillLevel(level);
     const tip = level >= MAX_SKILL_LEVEL ? `${name} — Level ${level}/${MAX_SKILL_LEVEL} — MAX LEVEL` : `${name} — Level ${level}/${MAX_SKILL_LEVEL} — XP ${xp} / ${next} to next level`;
-    return `<button type="button" class="skill-tile" data-skill="${escapeHtml(key)}" data-tooltip="${escapeHtml(tip)}" aria-haspopup="dialog" aria-controls="skill-details-dialog"><span class="skill-icon">${escapeHtml(icon)}</span><span class="skill-name">${escapeHtml(name)}</span><strong>${level}<small>/${MAX_SKILL_LEVEL}</small></strong></button>`;
+    return `<button type="button" class="skill-tile" data-skill="${escapeHtml(key)}" data-tooltip="${escapeHtml(tip)}" aria-haspopup="dialog" aria-label="${escapeHtml(`${name}, level ${level} of ${MAX_SKILL_LEVEL}`)}" aria-controls="skill-details-dialog"><span class="skill-icon">${escapeHtml(icon)}</span><span class="skill-name">${escapeHtml(name)}</span><strong>${level}<small>/${MAX_SKILL_LEVEL}</small></strong></button>`;
   }).join('')}</div>`;
 }
 

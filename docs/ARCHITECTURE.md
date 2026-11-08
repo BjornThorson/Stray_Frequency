@@ -141,6 +141,15 @@ The production site currently uses the root deployment base `/`, but feature cod
 
 See [ASSET-GUIDE.md](./ASSET-GUIDE.md).
 
+## Experimental NPC social simulation
+
+The sandbox contains a standalone relationship, memory, behaviour and social
+interaction engine plus a locally tested, opt-in persistence migration. These
+modules are not yet connected to live gameplay. See
+[SOCIAL-SIMULATION.md](./SOCIAL-SIMULATION.md) for responsibilities, data
+authority and rollout constraints.
+
+
 ## Adding a gameplay system
 
 1. Put static definitions in `data/` and genuinely shared vocabulary in `core/`.
